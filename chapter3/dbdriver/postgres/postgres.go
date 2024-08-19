@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"database/sql"
+	"fmt"
 	"database/sql/driver"
 	"errors"
 )
@@ -20,5 +21,6 @@ var d *PostgresDriver
 // init is called prior to main.
 func init() {
 	d = new(PostgresDriver)
+	fmt.Println("postgres init")
 	sql.Register("postgres", d)
 }
