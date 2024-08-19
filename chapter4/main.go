@@ -4,8 +4,17 @@ import "fmt"
 
 func main() {
 	// slice()
-	sliceByLiteral()
-
+	// sliceByLiteral()
+	// sliceNil()
+	// sliceUse1()
+	// sliceAppend()
+	// sliceAppend2()
+	// sliceAppend3_WithSameLenAndCap()
+	// sliceAppend4_expand()
+	// sliceIterator()
+	// sliceIterator_copy()
+	sliceMutilDim()
+	
 	// array()
 	// arrayPointer()
 	// arrayAssisnment()
@@ -13,23 +22,110 @@ func main() {
 	// arrayMultiDim()
 }
 
-func slice(){
+func sliceMutilDim(){
+	slice := [][]int{{10}, {20}}
+	slice[0] = append(slice[0], 11)
+	fmt.Println(slice)
+}
+
+func sliceIterator(){
+	slice := []int{10, 20 ,30,  40}
+	for index, value := range slice{
+		fmt.Printf("Index:%d Value:%d\n", index, value)
+	}
+}
+
+func sliceIterator_copy(){
+	slice := []int{10, 20 ,30,  40}
+	for index, value := range slice{
+		//value 拷贝的 slice[index] 值
+		fmt.Printf("Value:%d ValueAddr:%X ElementAddr:%X\n", value, &value, &slice[index])
+	}
+}
+
+func sliceAppend4_expand(){
+	s1 := []int{1, 2}
+	s2 := []int{3, 4}
+	fmt.Printf("%v\n", append(s1, s2...))
+}
+
+func sliceAppend3_WithSameLenAndCap() {
+	source :=
+		[]string{"Apple", "Orange", "Plum", "Banana", "Grape"}
+	slice := source[2:3:3]
+	fmt.Println(len(slice), cap(slice))
+	fmt.Printf("%p\n", &slice)
+	slice2 := append(slice, "kivi")
+	fmt.Printf("%p\n", &slice2)
+
+}
+
+func sliceAppend2() {
+	source :=
+		[]string{"Apple", "Orange", "Plum", "Banana", "Grape"}
+	slice := source[2:3:4]
+	fmt.Println(len(slice), cap(slice))
+
+	//panic: runtime error: slice bounds out of range [::6] with capacity 5
+	slice2 := source[2:3:6]
+	fmt.Println(slice2)
+}
+
+func sliceAppend() {
+	slice := []int{10, 20, 30, 40, 50}
+	newSlice := slice[1:3]
+
+	newSlice = append(newSlice, 60)
+	fmt.Println(slice)
+	fmt.Println(newSlice)
+
+	// slice cap grow
+	slice = append(slice, 60)
+	fmt.Println(slice, len(slice), cap(slice))
+}
+
+func sliceUse1() {
+	slice := []int{10, 20, 30, 40, 50}
+	fmt.Println(slice)
+
+	newSlice := slice[1:3]
+	fmt.Println(newSlice)
+
+	newSlice[1] = 35
+	fmt.Println(slice)
+	fmt.Println(newSlice)
+	//newSlice length is 2
+	//panic: runtime error: index out of range [3] with length 2
+	// newSlice[3] = 45
+
+}
+
+func slice() {
 	slice := make([]string, 3, 5)
 	slice = append(slice, "hello")
 	fmt.Println(slice)
 }
 
-func sliceByLiteral(){
-	slice := []string{"hello", "world"} 
+func sliceByLiteral() {
+	slice := []string{"hello", "world"}
 	fmt.Println(slice)
+
+	slice2 := []string{99: "test 99"}
+	fmt.Println(slice2)
 }
 
+func sliceNil() {
+	slice := make([]int, 0)
+	fmt.Println(len(slice), cap(slice))
+	slice2 := []int{}
+	fmt.Println(len(slice2), cap(slice2))
+}
 
-func arrayMultiDim(){
-	var array [4][2]int 
-	array = [4][2]int{{10, 11}, {20, 21}, {30, 31}, { 40, 41}};
+func arrayMultiDim() {
+	var array [4][2]int
+	array = [4][2]int{{10, 11}, {20, 21}, {30, 31}, {40, 41}}
 	array = [4][2]int{1: {20, 21}, 3: {40, 41}}
-	array = [4][2]int{1: {0:20}, 3:{1:41}}
+	array = [4][2]int{1: {0: 20}, 3: {1: 41}}
 	fmt.Println(array)
 }
 
