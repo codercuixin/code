@@ -3,6 +3,9 @@ package main
 import "fmt"
 
 func main() {
+	// map1()
+	mapIterator()
+
 	// slice()
 	// sliceByLiteral()
 	// sliceNil()
@@ -13,8 +16,8 @@ func main() {
 	// sliceAppend4_expand()
 	// sliceIterator()
 	// sliceIterator_copy()
-	sliceMutilDim()
-	
+	// sliceMutilDim()
+
 	// array()
 	// arrayPointer()
 	// arrayAssisnment()
@@ -22,28 +25,58 @@ func main() {
 	// arrayMultiDim()
 }
 
-func sliceMutilDim(){
+func map1() {
+	colors := map[string]string{}
+	colors["Red"] = "#da1337"
+	fmt.Println(colors)
+
+	value, exists := colors["Blue"]
+	if exists {
+		fmt.Println(value)
+	}
+}
+
+func mapIterator() {
+	colors := map[string]string{"AliceBlue": "#f0f8ff",
+		"Coral": "#ff7F50", "DarkGray": "#a9a9a9", "ForestGreen": "#228b22"}
+	for key, value := range colors {
+		fmt.Println(key, value)
+	}
+	// delete(colors, "Coral")
+	removeColor(colors, "DarkGray")
+	fmt.Println()
+	for key, value := range colors {
+		fmt.Println(key, value)
+	}
+}
+
+func removeColor(colors map[string]string, key string){
+	delete(colors, key)
+}
+
+
+func sliceMutilDim() {
 	slice := [][]int{{10}, {20}}
 	slice[0] = append(slice[0], 11)
 	fmt.Println(slice)
 }
 
-func sliceIterator(){
-	slice := []int{10, 20 ,30,  40}
-	for index, value := range slice{
+func sliceIterator() {
+	slice := []int{10, 20, 30, 40}
+	for index, value := range slice {
 		fmt.Printf("Index:%d Value:%d\n", index, value)
 	}
 }
 
-func sliceIterator_copy(){
-	slice := []int{10, 20 ,30,  40}
-	for index, value := range slice{
+func sliceIterator_copy() {
+	slice := []int{10, 20, 30, 40}
+	for index, value := range slice {
 		//value 拷贝的 slice[index] 值
 		fmt.Printf("Value:%d ValueAddr:%X ElementAddr:%X\n", value, &value, &slice[index])
 	}
 }
 
-func sliceAppend4_expand(){
+func sliceAppend4_expand() {
 	s1 := []int{1, 2}
 	s2 := []int{3, 4}
 	fmt.Printf("%v\n", append(s1, s2...))
